@@ -1,0 +1,31 @@
+Package: rauth0
+Title: Tools for data manipulation in Auth0
+Version: 1.1
+Authors@R: person("Pablo", "Seibelt", email = "pablo.seibelt@auth0.com", role = c("aut", "cre"))
+Description: It allows you to use the DWH Connections,
+  utility functions, and access constants.
+Depends: R (>= 3.4.0)
+Imports:
+  dplyr,
+  tibble,
+  yaml,
+  dbplyr,
+  RPostgres,
+  googlesheets,
+  httr,
+  ini,
+  jsonlite,
+  bcrypt,
+  redshiftTools,
+  DBI,
+  magrittr,
+  rlang,
+  digest,
+  ggplot2,
+  scales
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests:
+    testthat
