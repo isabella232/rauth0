@@ -22,7 +22,7 @@
 #'
 #' @importFrom redshiftTools rs_upsert_table
 #' @export
-dwh_table_upsert = function(df, table_name, keys, split_num=80, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
+dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
 
   #If connection not provided, start a temporary connection
   if(is.null(pcon)){
@@ -75,7 +75,7 @@ dwh_table_upsert = function(df, table_name, keys, split_num=80, bucket=Sys.geten
 #'
 #' @importFrom redshiftTools rs_replace_table
 #' @export
-dwh_table_replace = function(df, table_name, split_num=80, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
+dwh_table_replace = function(df, table_name, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
   #If connection not provided, start a temporary connection
   if(is.null(pcon)){
     con = dwh_connect()
