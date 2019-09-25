@@ -3,7 +3,7 @@
 #' Types of events which count as active users for usage consumption, as a vector
 #'
 #' @export
-CONST_LOGIN_TYPES=c('s', 'sepft', 'ssa', 'seoobft', 'seotpft', 'sercft', 'sertft', 'seacft', 'scoa')
+CONST_LOGIN_TYPES=c('s', 'sepft', 'ssa', 'seoobft', 'seotpft', 'sercft', 'sertft', 'seacft', 'scoa', 'sens')
 
 #' Login types (string)
 #'
