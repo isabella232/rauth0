@@ -50,10 +50,10 @@ pipeline {
   post {
     cleanup {
       script {
-        try {
-          sh('docker rmi -f ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
-        } catch (Exception e) {
-          echo "Failed to remove docker container ${e}"
+        sh """
+        docker rmi ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
+        docker rmi rocker/r-base
+        """
         }
 
         deleteDir()
