@@ -30,8 +30,8 @@ pipeline {
       steps {
         script {
           sh """
-          docker build -t ${env.BUILD_TAG}-${env.SERVICE_NAME} .
-          docker run -it --rm ${env.BUILD_TAG}-${env.SERVICE_NAME}
+          docker build -t ${env.BUILD_NUMBER}-${env.SERVICE_NAME} .
+          docker run -it --rm ${env.BUILD_NUMBER}-${env.SERVICE_NAME}
           """
         }
       }
@@ -53,7 +53,7 @@ post {
   cleanup {
     script {
       try {
-        sh('docker rmi ${env.BUILD_TAG}-${env.SERVICE_NAME}')
+        sh('docker rmi ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
       } catch (Exception e) {
         echo "Failed to remove docker container ${e}"
       }
