@@ -46,18 +46,18 @@ pipeline {
       }
     }
   }
-}
 
-post {
-  cleanup {
-    script {
-      try {
-        sh('docker rmi ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
-      } catch (Exception e) {
-        echo "Failed to remove docker container ${e}"
+  post {
+    cleanup {
+      script {
+        try {
+          sh('docker rmi -f ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
+        } catch (Exception e) {
+          echo "Failed to remove docker container ${e}"
+        }
+
+        deleteDir()
       }
-
-      deleteDir()
     }
   }
 }
