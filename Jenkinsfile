@@ -48,16 +48,17 @@ pipeline {
   }
 
   post {
-    cleanup {
+    always {
       script {
         sh """
         docker rmi ${env.BUILD_NUMBER}-${env.SERVICE_NAME}')
         docker rmi rocker/r-base
         """
-        }
-
-        deleteDir()
       }
+    }
+    cleanup {
+
+      deleteDir()
     }
   }
 }
