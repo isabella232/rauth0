@@ -1,39 +1,64 @@
 @Library('auth0') _
 pipeline {
-	options {
-		timeout(time: 15, unit: 'MINUTES') // Global timeout for the job. Recommended to make the job fail if it's taking too long
-	}
+  options {
+  timeout(time: 15, unit: 'MINUTES') 
+  }
 
-	parameters { // Job parameters that need to be supplied when the job is run. If they have a default value they won't be required
-		string(name: 'SlackTarget', defaultValue: '#data-monitoring', description: 'Target Slack Channel for notifications')
-	}
- 
-	agent {
-	    dockerfile {
-	        filename 'Dockerfile'
-	        label 'rauth0'
-	    }
-	}
-    stages {
+  parameters {
+  string(name: 'SlackTarget', defaultValue: '#data-monitoring', description: 'Target Slack Channel for notifications')
+  }
+  
+  environment { // This block defines environment variables that will be available throughout the rest of the pipeline
+    SERVICE_NAME = 'rauth0'
+  }
 
-        stage('Test R Environment') {
-            steps {
-                sh 'R -e "require(rauth0)"'
-            }
-        }
+  agent {
+      label 'ubuntu-14'
+  }
+
+  stages {
+    stage('SharedLibs') { // Required. Stage to load the Auth0 shared library for Jenkinsfile
+      steps {
+        library identifier: 'auth0-jenkins-pipelines-library@master', retriever: modernSCM(
+        [$class: 'GitSCMSource',
+        remote: 'git@github.com:auth0/auth0-jenkins-pipelines-library.git',
+        credentialsId: 'auth0extensions-ssh-key'])
+      }
     }
+
+    stage('Build Docker Environment') {
+      steps {
+        script {
+          sh """
+          docker build -t ${env.BUILD_TAG}-${env.SERVICE_NAME} .
+          docker run -it --rm ${env.BUILD_TAG}-${env.SERVICE_NAME}
+          """
+        }
+      }
+    }
+
+    stage('Test R Environment') {
+      steps {
+        script {
+          sh """
+          R cmd -e 'require(rauth0)'
+          """
+        }
+      }
+    }
+  }
 }
 
 post {
-    cleanup {
-        script {
-            try {
-                sh('docker rmi rauth0')
-            } catch (Exception e) {
-                echo "Failed to remove docker container ${e}"
-            }
+  cleanup {
+    script {
+      try {
+        sh('docker rmi ${env.BUILD_TAG}-${env.SERVICE_NAME}')
+      } catch (Exception e) {
+        echo "Failed to remove docker container ${e}"
+      }
 
-            deleteDir()
-        }
+      deleteDir()
     }
+  }
 }
