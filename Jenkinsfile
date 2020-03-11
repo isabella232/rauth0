@@ -1,7 +1,7 @@
 @Library('auth0') _
 pipeline {
   options {
-  timeout(time: 15, unit: 'MINUTES') 
+  timeout(time: 25, unit: 'MINUTES') 
   }
 
   parameters {
@@ -31,7 +31,6 @@ pipeline {
         script {
           sh """
           docker build -t ${env.BUILD_NUMBER}-${env.SERVICE_NAME} .
-          docker run -it --rm ${env.BUILD_NUMBER}-${env.SERVICE_NAME}
           """
         }
       }
@@ -41,7 +40,7 @@ pipeline {
       steps {
         script {
           sh """
-          R cmd -e 'require(rauth0)'
+          docker run --rm ${env.BUILD_NUMBER}-${env.SERVICE_NAME} R cmd -e 'require(rauth0)'
           """
         }
       }
