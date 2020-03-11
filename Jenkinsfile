@@ -28,7 +28,7 @@ post {
     cleanup {
         script {
             try {
-                sh('docker rmi -f $(docker images | grep rauth0 | tr -s ' ' | cut -d ' ' -f 3)')
+                sh('docker rmi rauth0')
             } catch (Exception e) {
                 echo "Failed to remove docker container ${e}"
             }
