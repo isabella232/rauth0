@@ -18,7 +18,7 @@ pipeline {
 
         stage('Test R Environment') {
             steps {
-                R -e require(rauth0)
+                R -e 'require(rauth0)'
             }
         }
     }
