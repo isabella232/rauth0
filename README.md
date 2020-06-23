@@ -2,6 +2,32 @@
 
 This package defines functions to connect to Auth0's DWH, and some common manipulations of data for internal usage in Auth0.
 
+How to Install
+--------------
+
+This package relies on a number of dependencies that are not available on CRAN. This means that you will need to install 2 dependencies manually.
+
+1. [aws.s3](https://github.com/cloudyr/aws.s3)
+2. [redshiftTools](https://github.com/sicarul/redshiftTools)
+
+If the `devtools` library is installed, you can install directly from GitHub. Open R or RStudio and run:
+
+``` r
+devtools::install_github("cloudyr/aws.s3")
+devtools::install_github("sicarul/redshiftTools")
+devtools::install_github("auth0/rauth0")
+```
+
+**note:** you may need to generate a personal access token and supply that as a parameter to the install function. Consult the help file for `install_github` for details.
+
+Alternatively, you can clone these repos and then use the following command in the R console using the [remotes](https://cran.r-project.org/web/packages/remotes/remotes.pdf) package:
+
+``` r
+remotes::install_local("path to aws.s3 directory", dependencies = TRUE)
+remotes::install_local("path to redshiftTools directory", dependencies = TRUE)
+remotes::install_local("path to rauth0 directory", dependencies = TRUE)
+```
+
 ## Functions
 
 This package exports the following functions:
