@@ -38,6 +38,7 @@ jobs:
     - name: Build the rAuth0 Docker Environment
       shell: bash
       run: |
+        ls
         docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 .
 
   docker-push:
