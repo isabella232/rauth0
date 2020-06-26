@@ -22,7 +22,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Artifactory Login
-      shell: bash
       run: |
         docker login "${{ secrets.DOCKER_REGISTRY }}" -u "${{ secrets.ARTIFACTORY_USER }}" -p "${{ secrets.ARTIFACTORY_KEY }}"
 
@@ -36,21 +35,16 @@ jobs:
     needs: setup
     steps:
     - name: Build the rAuth0 Docker Environment
-      shell: bash
       run: |
-        docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 ${GITHUB_WORKSPACE}/rauth0
+        docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 .
 
   docker-push:
     runs-on: ubuntu-latest
     needs: [setup, build-environments]
     steps:
     - name: Tag Docker Images with Branch
-      shell: bash
       run: |
         docker tag ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:latest ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
     - name: Push Docker Images to Artifactory
-      shell: bash
-      env:
-        DOCKER_REGISTRY: ${( secrets.DOCKER_REGISTRY }}
       run: |
         docker push ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
