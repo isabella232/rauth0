@@ -33,7 +33,7 @@ jobs:
         DOCKER_REGISTRY: ${( secrets.DOCKER_REGISTRY }}
         ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
         ARTIFACTORY_KEY: ${{ secrets.ARTIFACTORY_KEY }}
-      run: docker login ${DOCKER_REGISTRY} -u ${ARTIFACTORY_USER } -p ${ARTIFACTORY_KEY }
+      run: docker login ${DOCKER_REGISTRY} -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_KEY}
 
     - name: Set Variables
       id: vars
@@ -60,10 +60,10 @@ jobs:
       env:
         DOCKER_REGISTRY: ${( secrets.DOCKER_REGISTRY }}
       run: |
-        docker tag ${DOCKER_REGISTRY }/docker/rauth0:latest ${DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
+        docker tag ${DOCKER_REGISTRY}/docker/rauth0:latest ${DOCKER_REGISTRY}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
     - name: Push Docker Images to Artifactory
       shell: bash
       env:
         DOCKER_REGISTRY: ${( secrets.DOCKER_REGISTRY }}
       run: |
-        docker push ${DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
+        docker push ${DOCKER_REGISTRY}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
