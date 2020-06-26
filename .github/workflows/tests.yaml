@@ -29,7 +29,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2.3.1
 
-    steps:
     - name: Build the rAuth0 Docker Environment
       run: |
         docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 .
