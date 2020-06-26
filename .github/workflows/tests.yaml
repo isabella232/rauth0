@@ -26,9 +26,8 @@ jobs:
       env:
         ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
         ARTIFACTORY_KEY: ${{ secrets.ARTIFACTORY_KEY }}
-        DOCKER_REGISTRY: ${( secrets.DOCKER_REGISTRY }}
       run: |
-        docker login "$DOCKER_REGISTRY" -u "$ARTIFACTORY_USER" -p "$ARTIFACTORY_KEY"
+        docker login "${{ secrets.DOCKER_REGISTRY }}" -u "$ARTIFACTORY_USER" -p "$ARTIFACTORY_KEY"
 
     - name: Set Variables
       id: vars
