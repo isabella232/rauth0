@@ -1,4 +1,4 @@
-name: Run All Required Tests for Vortex
+name: Run All Required Tests for rAuth0
 on:
   push:
     branches:
@@ -13,12 +13,6 @@ jobs:
     outputs:
       branch-name: ${{ steps.vars.outputs.short_ref }}
     steps:
-    # Because we are using a self-hosted runner we need to clean the directories
-    # from previous jobs that may have been completed.
-    - name: Clean Workspace
-      run: |
-        sudo rm -rf ${GITHUB_WORKSPACE}
-
     - name: Checkout code
       uses: actions/checkout@v1.2.0
       with:
