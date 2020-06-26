@@ -1,0 +1,66 @@
+name: Run All Required Tests for Vortex
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - v**.**.**
+
+jobs:
+
+  setup:
+    runs-on: self-hosted
+    outputs:
+      branch-name: ${{ steps.vars.outputs.short_ref }}
+    steps:
+    # Because we are using a self-hosted runner we need to clean the directories
+    # from previous jobs that may have been completed.
+    - name: Clean Workspace
+      run: |
+        sudo rm -rf ${GITHUB_WORKSPACE}
+
+    - name: Checkout code
+      uses: actions/checkout@v1.2.0
+      with:
+        fetch-depth: 1
+        # The branch that triggered the workflow.
+        ref: ${{ github.ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Artifactory Login
+      shell: bash -l {0}
+      run: docker login ${( secrets.DOCKER_REGISTRY }} -u ${{ secrets.ARTIFACTORY_USER }} -p ${{ secrets.ARTIFACTORY_KEY }}
+
+    - name: Set Variables
+      id: vars
+      run: |
+        echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+  build-environments:
+    runs-on: self-hosted
+    needs: setup
+    steps:
+    - name: Build the rAuth0 Docker Environment
+      run: |
+        docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 .
+
+  docker-push:
+    runs-on: self-hosted
+    needs: [setup, build-environments]
+    steps:
+    - name: Tag Docker Images with Branch
+      run: |
+        docker tag ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:latest ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
+    - name: Push Docker Images to Artifactory
+      run: |
+        docker push ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
+
+  clean-up:
+    runs-on: self-hosted
+    needs: [docker-push]
+    steps:
+    # Remove all docker containers and images
+    - name: Clean Environment
+      run: |
+        docker rm $(docker ps -a -q)
+        docker rmi -f $(docker images -q)
