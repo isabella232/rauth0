@@ -9,7 +9,7 @@ on:
 jobs:
 
   setup:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       branch-name: ${{ steps.vars.outputs.short_ref }}
     steps:
