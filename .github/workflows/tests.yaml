@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       branch-name: ${{ steps.vars.outputs.short_ref }}
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2.3.1
 
     - name: Artifactory Login
       run: |
@@ -28,6 +25,10 @@ jobs:
   build-environments:
     runs-on: ubuntu-latest
     needs: setup
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2.3.1
+
     steps:
     - name: Build the rAuth0 Docker Environment
       run: |
