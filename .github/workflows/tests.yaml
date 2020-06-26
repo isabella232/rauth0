@@ -38,7 +38,7 @@ jobs:
     - name: Build the rAuth0 Docker Environment
       shell: bash
       run: |
-        docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 ${GITHUB_WORKSPACE}
+        docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 ${GITHUB_WORKSPACE}/rauth0
 
   docker-push:
     runs-on: ubuntu-latest
