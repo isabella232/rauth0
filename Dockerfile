@@ -8,7 +8,7 @@ COPY . /rauth0
 
 # Install devtools and remotes to help us install dependencies for rauth0
 RUN apt-get update && \
-  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev
+  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev libcurl4-gnutls-dev libcurl4-gnutls-dev
 
 RUN R cmd -e "install.packages('devtools')"
 
