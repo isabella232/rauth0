@@ -1,6 +1,6 @@
 # This dockerfile will create a base image that has rauth0 and all dependencies installed
 
-FROM rocker/r-base:latest
+FROM rocker/r-base:3.6.3
 LABEL AUTHOR=auth0/data-engineering
 LABEL REPO=auth0/rauth0
 
