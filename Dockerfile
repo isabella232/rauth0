@@ -8,8 +8,10 @@ COPY . /rauth0
 
 # Install devtools and remotes to help us install dependencies for rauth0
 RUN apt-get update && \
-  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev
+  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev awscli git
 
+# Copy the data warehouse credentials from S3.
+RUN aws s3 cp s3://dwh-vortex-dependencies/.dwh_credentials .dwh_credentials && mv .dwh_credentials ~/.dwh_credentials
 RUN R cmd -e "install.packages('devtools', dependencies = TRUE)"
 
 # Install non-CRAN dependencies
