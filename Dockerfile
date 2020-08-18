@@ -8,11 +8,12 @@ COPY . /rauth0
 
 # Install devtools and remotes to help us install dependencies for rauth0
 RUN apt-get update && \
-  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev git awscli
+  apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev libpq-dev awscli
 
 RUN R cmd -e "install.packages('devtools', dependencies = TRUE)"
 
 # Install non-CRAN dependencies
 RUN R cmd -e "devtools::install_github('cloudyr/aws.s3')"
+RUN R cmd -e "devtools::install_github('cloudyr/aws.ec2metadata')"
 RUN R cmd -e "devtools::install_github('sicarul/redshiftTools')"
 RUN R cmd -e "devtools::install('/rauth0', dependencies = TRUE)"
