@@ -15,5 +15,5 @@ RUN R cmd -e "install.packages('devtools', dependencies = TRUE)"
 # Install non-CRAN dependencies
 RUN R cmd -e "devtools::install_github('cloudyr/aws.s3')"
 RUN R cmd -e "devtools::install_github('cloudyr/aws.ec2metadata')"
-RUN R cmd -e "devtools::install_github('sicarul/redshiftTools')"
+RUN R cmd -e "devtools::install_github('scottypate/redshiftTools')"
 RUN R cmd -e "devtools::install('/rauth0', dependencies = TRUE)"
