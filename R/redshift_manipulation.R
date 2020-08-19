@@ -11,8 +11,6 @@
 #' @param bucket The S3 bucket on which to dump the data before sending to Amazon Redshift
 #' @param region The region where the bucket resides
 #' @param iam_role_arn The role that is set in Amazon Redshift to access the S3 bucket (You only need this or the access/secret keys)
-#' @param access_key The access key that is set in Amazon Redshift to access the S3 bucket (You only need this or the IAM Role)
-#' @param secret_key The secret key that is set in Amazon Redshift to access the S3 bucket (You only need this or the IAM Role)
 #' @param pcon Optionally, use an existing connection, if not, will start a temporary connection to use
 #'
 #' @examples
@@ -22,7 +20,7 @@
 #'
 #' @importFrom redshiftTools rs_upsert_table
 #' @export
-dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
+dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'),  pcon=NULL) {
 
   #If connection not provided, start a temporary connection
   if(is.null(pcon)){
@@ -37,8 +35,6 @@ dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("
             bucket=bucket,
             region=region,
             keys=keys,
-            access_key = access_key,
-            secret_key = secret_key,
             iam_role_arn = iam_role_arn,
             split_files=split_num)
 
@@ -64,8 +60,6 @@ dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("
 #' @param bucket The S3 bucket on which to dump the data before sending to Amazon Redshift
 #' @param region The region where the bucket resides
 #' @param iam_role_arn The role that is set in Amazon Redshift to access the S3 bucket (You only need this or the access/secret keys)
-#' @param access_key The access key that is set in Amazon Redshift to access the S3 bucket (You only need this or the IAM Role)
-#' @param secret_key The secret key that is set in Amazon Redshift to access the S3 bucket (You only need this or the IAM Role)
 #' @param pcon Optionally, use an existing connection, if not, will start a temporary connection to use
 #'
 #' @examples
@@ -75,7 +69,7 @@ dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("
 #'
 #' @importFrom redshiftTools rs_replace_table
 #' @export
-dwh_table_replace = function(df, table_name, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'), access_key='', secret_key='',  pcon=NULL) {
+dwh_table_replace = function(df, table_name, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'),  pcon=NULL) {
   #If connection not provided, start a temporary connection
   if(is.null(pcon)){
     con = dwh_connect()
@@ -88,8 +82,6 @@ dwh_table_replace = function(df, table_name, split_num, bucket=Sys.getenv("STAGI
             table_name = table_name,
             bucket=bucket,
             region=region,
-            access_key = access_key,
-            secret_key = secret_key,
             iam_role_arn = iam_role_arn,
             split_files=split_num)
 
