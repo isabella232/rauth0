@@ -1,4 +1,29 @@
+library(rjson)
+library(uuid)
+library(fs)
 
+RAUTH0_WRITE_DATA_FILE = Sys.getenv("RAUTH0_WRITE_DATA_FILE")
+RAUTH0_DATA_OUTPUT_DIR = "/tmp/snowflakeshim/"
+
+
+write_snowflake_shim_data_file = function(df, table_name, action) {
+    if (RAUTH0_WRITE_DATA_FILE != "1") {
+        return("")
+    }
+    metadata = data.frame(table=table_name, action=action)
+    file_name = UUIDgenerate() + ".csv"
+    file_abs_path = RAUTH0_DATA_OUTPUT_DIR + "staged/" + file_name
+    data_dir_abs_path = RAUTH0_DATA_OUTPUT_DIR + "data/" + file_name
+
+    # write the json out to the target file
+    print(paste0("Creating data file: ", file_abs_path, collapse=""))
+    write(toJSON(metadata), file_abs_path)
+    write.table(df, sep=",", col.names=FALSE, append=TRUE)
+
+    # move the file to the output directory :( this is a hack we need a better interface around this
+    print(paste0("moving data file: ", data_dir_abs_path, collapse=""))
+    file_move(file_abs_path, data_dir_abs_path)
+}
 
 #' Upsert DWH Table
 #'
@@ -89,6 +114,8 @@ dwh_table_replace = function(df, table_name, split_num, bucket=Sys.getenv("STAGI
   if(is.null(pcon)){
     dwh_disconnect(con)
   }
+
+  write_snowflake_shim_data_file(df, table_name=table_name, action="replace")
 
   if(res==TRUE){
     res
