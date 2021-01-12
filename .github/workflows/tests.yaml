@@ -10,13 +10,11 @@ jobs:
 
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      branch-name: ${{ steps.vars.outputs.short_ref }}
     steps:
     - name: Set Variables
       id: vars
       run: |
-        echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
   docker:
     runs-on: ubuntu-latest
@@ -30,9 +28,3 @@ jobs:
     - name: Build the rAuth0 Docker Environment
       run: |
         docker build -t ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0 .
-    - name: Tag Docker Images with Branch
-      run: |
-        docker tag ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:latest ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}
-    - name: Push Docker Images to Artifactory
-      run: |
-        docker push ${{ secrets.DOCKER_REGISTRY }}/docker/rauth0:${{ needs.setup.outputs.branch-name }}

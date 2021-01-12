@@ -58,3 +58,17 @@ This package exports the following constants:
 * CONST_LOGIN_TYPES_STR
 * CONST_SOCIAL_CONNECTIONS
 * CONST_SOCIAL_CONNECTIONS_STR
+
+
+# Building Docker
+
+CI depends on a docker base image. This image is currently built manually. Whenever core system deps change
+the image must be rebuilt and pushed before CI will pass.
+
+- Build the Image
+```
+$ docker build -t a0us-docker.jfrog.io/docker/data/r-base -f Dockerfile.base .
+$ docker push a0us-docker.jfrog.io/docker/data/r-base
+```
+- Push the Image to Artifactory
+- Build the CI Image
