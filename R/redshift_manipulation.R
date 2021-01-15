@@ -20,7 +20,7 @@ write_shim_data_file = function(df, table_name, action) {
     # write the json out to the target file
     print(paste0("Creating data file: ", file_abs_path, collapse=""))
     write(rjson::toJSON(metadata), file_abs_path)
-    write.table(df, file_abs_path, sep=",", col.names=FALSE, append=TRUE, na='', quote=TRUE, row.names=FALSE)
+    write.table(df, file_abs_path, sep=",", col.names=TRUE, append=TRUE, na='', quote=TRUE, row.names=FALSE)
 
     # move the file to the output directory :( this is a hack we need a better interface around this
     print(paste0("moving data file: ", data_dir_abs_path, collapse=""))
