@@ -60,6 +60,13 @@ This package exports the following constants:
 * CONST_SOCIAL_CONNECTIONS_STR
 
 
+# Deploy to DWH-*
+
+```
+$ R cmd -e "devtools::install_github('auth0/rauth0')"
+```
+
+
 # Building Docker
 
 CI depends on a docker base image. This image is currently built manually. Whenever core system deps change
@@ -71,4 +78,12 @@ $ docker build -t a0us-docker.jfrog.io/docker/data/r-base -f Dockerfile.base .
 $ docker push a0us-docker.jfrog.io/docker/data/r-base
 ```
 - Push the Image to Artifactory
+
+```
+$ docker push a0us-docker.jfrog.io/docker/data/r-base
+```
+
 - Build the CI Image
+```
+$ docker build -t rauth0 .
+```
