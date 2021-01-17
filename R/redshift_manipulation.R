@@ -13,14 +13,14 @@ write_shim_data_file = function(df, table_name, action) {
     }
 
     metadata = data.frame(table=table_name, action=action)
-    file_name = paste0(uuid::UUIDgenerate(), ".csv")
+    file_name = paste0(uuid::UUIDgenerate(), ".json")
     file_abs_path = paste0(RAUTH0_DATA_OUTPUT_DIR, "staged/", file_name)
     data_dir_abs_path = paste0(RAUTH0_DATA_OUTPUT_DIR, "data/", file_name)
 
     # write the json out to the target file
     print(paste0("Creating data file: ", file_abs_path, collapse=""))
     write(rjson::toJSON(metadata), file_abs_path)
-    write.table(df, file_abs_path, sep=",", col.names=TRUE, append=TRUE, na='', quote=TRUE, row.names=FALSE)
+    write(rjson::toJSON(df), file_abs_path, append=TRUE)
 
     # move the file to the output directory :( this is a hack we need a better interface around this
     print(paste0("moving data file: ", data_dir_abs_path, collapse=""))
