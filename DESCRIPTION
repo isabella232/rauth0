@@ -16,6 +16,7 @@ Imports:
   ini,
   jsonlite,
   bcrypt,
+  redshiftToolsTest,
   DBI,
   magrittr,
   rlang,
