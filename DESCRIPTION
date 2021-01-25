@@ -1,4 +1,4 @@
-Package: rauth0
+Package: rauth0Test
 Title: Tools for data manipulation in Auth0
 Version: 1.1
 Authors@R: person("Pablo", "Seibelt", email = "pablo.seibelt@auth0.com", role = c("aut", "cre"))
@@ -16,7 +16,6 @@ Imports:
   ini,
   jsonlite,
   bcrypt,
-  redshiftTools,
   DBI,
   magrittr,
   rlang,
