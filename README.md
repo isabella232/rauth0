@@ -87,3 +87,14 @@ $ docker push a0us-docker.jfrog.io/docker/data/r-base
 ```
 $ docker build -t rauth0 .
 ```
+
+
+my_db <- src_snowflakedb(user = "danny" , password = "rz76n9wuHvMAhfq", account = "ml64055.eu-central-1", opts = list(warehouse = "DATA_TEAM_COMPUTE",db='redshift_legacy',schema='public'))
+
+
+> Sys.setenv(JAVA_HOME="/home/analytics/java/jdk-15.0.2/bin")
+> Sys.getenv("JAVA_HOME")
+[1] "/home/analytics/java/jdk-15.0.2/bin"
+>
+> options(dplyr.jdbc.classpath = "/home/analytics/java/jdk-15.0.2/snowflake/snowflake-jdbc-3.12.17.jar")
+> my_db <- src_snowflakedb(user = "danny" , password = "rz76n9wuHvMAhfq", account = "ml64055.eu-central-1", opts = list(warehouse = "DATA_TEAM_COMPUTE",db='redshift_legacy',schema='public'))
