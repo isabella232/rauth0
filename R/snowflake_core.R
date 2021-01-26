@@ -16,5 +16,5 @@ snowflake_connect = function(credentials) {
         )
     )
 
-    return con
+    con
 }
