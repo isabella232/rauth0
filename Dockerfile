@@ -9,6 +9,7 @@ COPY . /rauth0
 RUN R cmd -e "install.packages('rjson')"
 RUN R cmd -e "install.packages('uuid')"
 RUN R cmd -e "install.packages('fs')"
+RUN R cmd -e "install.packages('testthat')"
 
 # Install non-CRAN dependencies
 RUN R cmd -e "devtools::install_github('cloudyr/aws.s3')"
