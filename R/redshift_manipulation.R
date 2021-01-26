@@ -45,7 +45,7 @@ write_shim_data_file = function(df, table_name, action) {
 #' a=data.frame(column_a=c(1,2,3), column_b=c('a','b','c'), column_c=c('x','y','z'))
 #' dwh_table_upsert(a, 'test_table', c('column_a','column_b'))
 #'
-#' @importFrom redshiftTools rs_upsert_table
+#' @importFrom redshiftToolsTest rs_upsert_table
 #' @export
 dwh_table_upsert = function(df, table_name, keys, split_num, bucket=Sys.getenv("STAGINGBUCKET_NAME"), region=Sys.getenv("STAGINGBUCKET_REGION"), iam_role_arn=Sys.getenv('REDSHIFT_IAM_ROLE'),  pcon=NULL) {
 
