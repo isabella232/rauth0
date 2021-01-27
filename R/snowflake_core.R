@@ -2,6 +2,7 @@ library(dplyr)
 library(dplyr.snowflakedb)
 
 
+#' @export
 snowflake_connect = function(credentials) {
     Sys.setenv(JAVA_HOME = credentials$javahome)
     options(dplyr.jdbc.classpath = credentials$snowflakejdbc)
