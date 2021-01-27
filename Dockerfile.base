@@ -6,5 +6,17 @@ LABEL REPO=auth0/rauth0
 
 # Install devtools and remotes to help us install dependencies for rauth0
 RUN apt-get update && \
-  apt-get install -y gcc-8-base build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev libssh2-1-dev libpq-dev awscli r-cran-devtools
-
+  apt-get install -y \
+    gcc-8-base \
+    build-essential \
+    libcurl4-gnutls-dev \
+    libxml2-dev \
+    libssl-dev \
+    libssh2-1-dev \
+    libpq-dev \
+    awscli \
+    r-cran-devtools \
+    openjdk-8-jdk \
+    openjdk-8-jre \
+    r-cran-rjava \
+    r-base-dev
