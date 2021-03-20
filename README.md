@@ -59,13 +59,11 @@ This package exports the following constants:
 * CONST_SOCIAL_CONNECTIONS
 * CONST_SOCIAL_CONNECTIONS_STR
 
-
 # Deploy to DWH-*
 
 ```
 $ R cmd -e "devtools::install_github('auth0/rauth0')"
 ```
-
 
 # Building Docker
 
