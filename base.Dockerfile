@@ -5,8 +5,8 @@ LABEL AUTHOR=auth0/data-engineering
 LABEL REPO=auth0/rauth0
 
 # Install devtools and remotes to help us install dependencies for rauth0
-RUN apt-get update && \
-  apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
     gcc-8-base \
     build-essential \
     libcurl4-gnutls-dev \
@@ -16,7 +16,7 @@ RUN apt-get update && \
     libpq-dev \
     awscli \
     r-cran-devtools \
-    openjdk-8-jdk \
-    openjdk-8-jre \
+    default-jdk \
+    default-jre \
     r-cran-rjava \
     r-base-dev

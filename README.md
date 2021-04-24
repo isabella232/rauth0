@@ -72,7 +72,7 @@ the image must be rebuilt and pushed before CI will pass.
 
 - Build the Image
 ```
-$ docker build -t a0us-docker.jfrog.io/docker/data/r-base -f Dockerfile.base .
+$ docker build -t a0us-docker.jfrog.io/docker/data/r-base -f base.Dockerfile .
 $ docker push a0us-docker.jfrog.io/docker/data/r-base
 ```
 - Push the Image to Artifactory
